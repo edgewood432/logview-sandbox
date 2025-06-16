@@ -1,0 +1,18 @@
+from django.utils.html import format_html
+from django.urls import reverse
+
+def render_actions(record):
+    update_url = reverse('eagle_cockpit:job-update', args=[record.id])
+    delete_url = reverse('eagle_cockpit:job-delete', args=[record.id])
+    restart_url = reverse('eagle_cockpit:restart', args=[record.id])
+
+    return format_html(
+        '<a href="{}" class="btn btn-sm btn-warning me-2" title="Update">'
+        '<i class="fas fa-edit fa-xl me-2"></i></a>'
+        '<a href="{}" class="icon-button delete me-2" title="Restart" '
+        'onclick="return confirmRestart(\'{}\');">'
+        '<i class="ml-4 fa-solid fa-share-from-square fa-xl"></i></a>'
+        '<a href="{}" class="btn btn-sm btn-danger" title="Delete">'
+        '<i class="fas fa-trash"></i></a>',
+        update_url, restart_url, record.id, delete_url
+    )
